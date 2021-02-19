@@ -40,20 +40,20 @@ var DefaultCompactPrinterFieldFmt = []FieldFmt{{
 	Finders:      []FieldFinder{ByNames("level", "severity")},
 	Transformers: []Transformer{Truncate(4), UpperCase, ColorMap(LevelColors)},
 }, {
-	Name:    "time",
-	Finders: []FieldFinder{ByNames("timestamp", "time")},
+	Name:    "ts",
+	Finders: []FieldFinder{ByNames("timestamp", "time", "ts")},
 }, {
 	Name:         "thread",
 	Transformers: []Transformer{Ellipsize(16), Format("[%s]"), RightPad(18), ColorSequence(AllColors)},
 }, {
 	Name:         "logger",
-	Transformers: []Transformer{Ellipsize(20), Format("%s|"), LeftPad(21), ColorSequence(AllColors)},
+	Transformers: []Transformer{Ellipsize(30), Format("%s|"), LeftPad(21), ColorSequence(AllColors)},
 }, {
-	Name:    "message",
+	Name:    "msg",
 	Finders: []FieldFinder{ByNames("message", "msg", "textPayload", "jsonPayload.message")},
 }, {
-	Name:     "errors",
-	Finders:  []FieldFinder{LogrusErrorFinder, ByNames("exceptions", "exception", "error")},
+	Name:     "stackTrace",
+	Finders:  []FieldFinder{DSErrorFinder, ByNames("stackTrace", "stack")},
 	Stringer: ErrorStringer,
 }}
 
