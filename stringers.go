@@ -47,7 +47,7 @@ func ErrorStringer(ctx *Context, v interface{}) string {
 		stackStr := "\t" + strings.Join(lines, "\n\t")
 		w.WriteString(stackStr)
 		return w.String()
-	}  else {
+	} else {
 		return DefaultStringer(ctx, v)
 	}
 }

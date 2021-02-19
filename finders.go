@@ -56,3 +56,14 @@ func LogrusErrorFinder(entry *Entry) interface{} {
 	}
 	return LogrusError{errStr, stack}
 }
+
+// DSErrorFinder finds logrus error in the JSON log and returns it as a LogrusError.
+func DSErrorFinder(entry *Entry) interface{} {
+	var errStr, stack string
+	if stackV, ok := entry.Partials["stackTrace"]; !ok {
+		return nil
+	} else if err := json.Unmarshal(stackV, &stack); err != nil {
+		return nil
+	}
+	return LogrusError{errStr, stack}
+}

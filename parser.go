@@ -27,8 +27,8 @@ func (p *Parser) Consume() error {
 		var partials map[string]json.RawMessage
 		_ = json.Unmarshal(raw, &partials)
 		message := &Entry{
-			Partials:    partials,
-			Raw:         raw,
+			Partials: partials,
+			Raw:      raw,
 		}
 		p.printer.Print(message)
 	}
@@ -40,6 +40,6 @@ type EntryPrinter interface {
 }
 
 type Entry struct {
-	Partials    map[string]json.RawMessage
-	Raw         []byte
+	Partials map[string]json.RawMessage
+	Raw      []byte
 }

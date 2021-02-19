@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/mattn/go-isatty"
-	"github.com/mightyguava/jl"
+	"github.com/nishantvas/jl"
 	"os"
 )
 
@@ -26,7 +26,7 @@ If [filename] is omitted, it reads from standard input.
 `, os.Args[0], os.Args[0])
 		flag.PrintDefaults()
 	}
-	formatFlag := flag.String("format", "compact", `Formatter for logs. The options are "compact" and "logfmt"`)
+	formatFlag := flag.String("format", "compact", `Formatter for logs. The options are "compact", "logfmt" and "ds"`)
 	color := flag.String("color", "auto", `Sets the color mode. The options are "auto", "yes", and "no". "auto" disables color if stdout is not a tty`)
 	truncate := flag.Bool("truncate", true, "Whether to truncate strings in the compact formatter")
 	flag.Parse()
@@ -53,6 +53,11 @@ If [filename] is omitted, it reads from standard input.
 		printer = lp
 	case "compact":
 		cp := jl.NewCompactPrinter(os.Stdout)
+		cp.DisableColor = disableColor
+		cp.DisableTruncate = !*truncate
+		printer = cp
+	case "ds":
+		cp := jl.DSCustomPrinter(os.Stdout)
 		cp.DisableColor = disableColor
 		cp.DisableTruncate = !*truncate
 		printer = cp

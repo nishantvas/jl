@@ -7,21 +7,21 @@ import (
 	"unicode"
 )
 
-// CompactPrinter can print logs in a variety of compact formats, specified by FieldFormats.
-type CompactPrinter struct {
+// DSCustomPrinter can print logs in a variety of compact formats, specified by FieldFormats.
+type DSCustomPrinter struct {
 	Out io.Writer
 	// Disable colors disables adding color to fields.
 	DisableColor bool
 	// Disable truncate disables the Ellipsize and Truncate transforms.
 	DisableTruncate bool
 	// FieldFormats specifies the format the printer should use for logs. It defaults to DefaultCompactPrinterFieldFmt. Fields
-	// are formatted in the order they are provided. If a FieldFmt produces a field that does not end with a whitespace,
+	// are formatted in the order they are provided. If a DSFieldFmt produces a field that does not end with a whitespace,
 	// a space character is automatically appended.
-	FieldFormats []FieldFmt
+	FieldFormats []DSFieldFmt
 }
 
-// FieldFmt specifies a single field formatted by the CompactPrinter.
-type FieldFmt struct {
+// DSFieldFmt specifies a single field formatted by the DSCustomPrinter.
+type DSFieldFmt struct {
 	// Name of the field. This is used to find the field by key name if Finders is not set.
 	Name string
 	// List of FieldFinders to use to locate the field. Finders are executed in order until the first one that returns
@@ -33,39 +33,39 @@ type FieldFmt struct {
 	Transformers []Transformer
 }
 
-// DefaultCompactPrinterFieldFmt is a format for the CompactPrinter that tries to present logs in an easily skimmable manner
+// DefaultCompactPrinterFieldFmt is a format for the DSCustomPrinter that tries to present logs in an easily skimmable manner
 // for most types of logs.
-var DefaultCompactPrinterFieldFmt = []FieldFmt{{
+var DefaultDSCustomPrinterFieldFmt = []DSFieldFmt{{
 	Name:         "level",
 	Finders:      []FieldFinder{ByNames("level", "severity")},
 	Transformers: []Transformer{Truncate(4), UpperCase, ColorMap(LevelColors)},
 }, {
-	Name:    "time",
-	Finders: []FieldFinder{ByNames("timestamp", "time")},
+	Name:    "ts",
+	Finders: []FieldFinder{ByNames("timestamp", "time", "ts")},
 }, {
 	Name:         "thread",
 	Transformers: []Transformer{Ellipsize(16), Format("[%s]"), RightPad(18), ColorSequence(AllColors)},
 }, {
 	Name:         "logger",
-	Transformers: []Transformer{Ellipsize(20), Format("%s|"), LeftPad(21), ColorSequence(AllColors)},
+	Transformers: []Transformer{Ellipsize(30), Format("%s|"), LeftPad(21), ColorSequence(AllColors)},
 }, {
-	Name:    "message",
+	Name:    "msg",
 	Finders: []FieldFinder{ByNames("message", "msg", "textPayload", "jsonPayload.message")},
 }, {
-	Name:     "errors",
-	Finders:  []FieldFinder{LogrusErrorFinder, ByNames("exceptions", "exception", "error")},
+	Name:     "stackTrace",
+	Finders:  []FieldFinder{DSErrorFinder, ByNames("stackTrace", "stack")},
 	Stringer: ErrorStringer,
 }}
 
 // NewCompactPrinter allocates and returns a new compact printer.
-func NewCompactPrinter(w io.Writer) *CompactPrinter {
-	return &CompactPrinter{
+func NewDSCustomPrinter(w io.Writer) *DSCustomPrinter {
+	return &DSCustomPrinter{
 		Out:          w,
-		FieldFormats: DefaultCompactPrinterFieldFmt,
+		FieldFormats: DefaultDSCustomPrinterFieldFmt,
 	}
 }
 
-func (p *CompactPrinter) Print(entry *Entry) {
+func (p *DSCustomPrinter) Print(entry *Entry) {
 	if entry.Partials == nil {
 		fmt.Fprintln(p.Out, string(entry.Raw))
 		return
@@ -86,7 +86,7 @@ func (p *CompactPrinter) Print(entry *Entry) {
 	p.Out.Write([]byte("\n"))
 }
 
-func (f *FieldFmt) format(ctx *Context, entry *Entry) string {
+func (f *DSFieldFmt) format(ctx *Context, entry *Entry) string {
 	var v interface{}
 	// Find the value
 	if len(f.Finders) > 0 {

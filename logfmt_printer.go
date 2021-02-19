@@ -23,12 +23,12 @@ var DefaultLogfmtPreferredFields = []string{
 // LogfmtPrinter prints log entries in the logfmt format.
 type LogfmtPrinter struct {
 	// Out is the writer where formatted logs are written to.
-	Out             io.Writer
+	Out io.Writer
 	// PreferredFields is an order list of top-level keys that the logfmt formatter will display ahead of other
 	// fields in the JSON log entry.
 	PreferredFields []string
 	// DisableColor disables ANSI color escape sequences.
-	DisableColor    bool
+	DisableColor bool
 }
 
 // NewLogfmtPrinter allocates and returns a new LogFmtPrinter.

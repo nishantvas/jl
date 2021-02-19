@@ -63,7 +63,7 @@ func (remain Ellipsize) Transform(ctx *Context, input string) string {
 	}
 	remain -= 1 // account for the ellipsis
 	chomped := length - int(remain)
-	start := int(remain)/2
+	start := int(remain) / 2
 	end := start + chomped
 	return input[:start] + "…" + input[end:]
 }
@@ -84,7 +84,7 @@ func (t LeftPad) Transform(ctx *Context, input string) string {
 	return buf.String()
 }
 
-// LeftPad pads the right side of the string with spaces so that the string becomes the requested length.
+// RightPad pads the right side of the string with spaces so that the string becomes the requested length.
 type RightPad int
 
 func (t RightPad) Transform(ctx *Context, input string) string {
