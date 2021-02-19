@@ -1,4 +1,4 @@
-# jl - JSON Log Viewer [![GoDoc](https://godoc.org/github.com/narqo/go-badge?status.svg)](https://godoc.org/github.com/mightyguava/jl) [![CircleCI](https://circleci.com/gh/mightyguava/jl/tree/master.svg?style=svg)](https://circleci.com/gh/mightyguava/jl/tree/master)
+# jl - JSON Log Viewer [![GoDoc](https://godoc.org/github.com/narqo/go-badge?status.svg)](https://godoc.org/github.com/nishantvas/jl) [![CircleCI](https://circleci.com/gh/nishantvas/jl/tree/master.svg?style=svg)](https://circleci.com/gh/nishantvas/jl/tree/master)
 
 jl (JL) is a parser and formatter for JSON logs, making machine-readable JSON logs human readable again.
 
@@ -7,7 +7,7 @@ jl (JL) is a parser and formatter for JSON logs, making machine-readable JSON lo
 ## Installing
 
 ```
-go get -u github.com/mightyguava/jl/cmd/jl
+go get -u github.com/nishantvas/jl/cmd/jl
 ```
 
 ## Usage
@@ -113,11 +113,11 @@ gcloud logging read "resource.type=cloud_run_revision AND resource.labels.servic
 ## Roll your own format
 
 If the format that JL provides does not suit your needs, All of jl's functionality is available as
-API, and it's simple to build your own CLI client. See the [godocs](https://godoc.org/github.com/mightyguava/jl)
+API, and it's simple to build your own CLI client. See the [godocs](https://godoc.org/github.com/nishantvas/jl)
 for the API.
 
 To change the compact format, all you need to do is provide another
-[`[]FieldFmt` specification](https://github.com/mightyguava/jl/blob/f46b94a89340cc314dcaf07622b94fe7dce8f60a/compact_printer.go#L27)
+[`[]FieldFmt` specification](https://github.com/nishantvas/jl/blob/f46b94a89340cc314dcaf07622b94fe7dce8f60a/compact_printer.go#L27)
 
 In the future, I plan to make jl configurable via either flags or config files, if there is demand
 for it.

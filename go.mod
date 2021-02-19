@@ -1,4 +1,4 @@
-module github.com/mightyguava/jl
+module github.com/nishantvas/jl
 
 go 1.12
 
