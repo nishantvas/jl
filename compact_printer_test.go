@@ -27,8 +27,8 @@ func TestCompactPrinter_Print(t *testing.T) {
 		formatted string
 	}{{
 		name:      "basic",
-		json:      `{"ts":"2019-01-01 15:23:45","level":"INFO","thread":"truck-manager","logger":"TruckRepairServiceOverlordManager","msg":"There are 7 more trucks in the garage to fix. Get to work."}`,
-		formatted: "INFO 2019-01-01 15:23:45 [truck-manager]    TruckRepairSer…OverlordManager| There are 7 more trucks in the garage to fix. Get to work.\n",
+		json:      `{"ts":"2019-01-01 15:23:45","level":"INFO","thread":"truck-manager","logger":"com.sun.magic.TruckRepairServiceOverlordManager","msg":"There are 7 more trucks in the garage to fix. Get to work."}`,
+		formatted: "INFO 2019-01-01 15:23:45 [truck-manager]    c.s.m.TruckRepairServiceOverlordManager| There are 7 more trucks in the garage to fix. Get to work.\n",
 	}, {
 		name: "exception",
 		json: `{"ts":"2019-01-01 15:34:45","level":"ERROR","thread":"repair-worker-2","logger":"TruckRepairMinion","msg":"Truck 5 has is really broken! I'm need parts, waiting till they come."}`,

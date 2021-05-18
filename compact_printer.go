@@ -47,7 +47,7 @@ var DefaultCompactPrinterFieldFmt = []FieldFmt{{
 	Transformers: []Transformer{Ellipsize(16), Format("[%s]"), RightPad(18), ColorSequence(AllColors)},
 }, {
 	Name:         "logger",
-	Transformers: []Transformer{Ellipsize(30), Format("%s|"), LeftPad(21), ColorSequence(AllColors)},
+	Transformers: []Transformer{ClassPath{}, Format("%s|"), LeftPad(21), ColorSequence(AllColors)},
 }, {
 	Name:    "msg",
 	Finders: []FieldFinder{ByNames("message", "msg", "textPayload", "jsonPayload.message")},

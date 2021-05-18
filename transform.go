@@ -68,6 +68,24 @@ func (remain Ellipsize) Transform(ctx *Context, input string) string {
 	return input[:start] + "…" + input[end:]
 }
 
+// ClassPath replaces class package name to a compressed form like com.sun.oracle.MyClass to c.s.o.MyClass
+type ClassPath struct{}
+
+func (ClassPath) Transform(ctx *Context, input string) string {
+	finalString := ""
+	pkg := strings.Split(input, ".")
+	if pkg == nil {
+		return input
+	}
+
+	for i := 0; i < len(pkg)-1; i++ {
+		finalString += pkg[i][:1] + "."
+	}
+	finalString += pkg[len(pkg)-1]
+
+	return finalString
+}
+
 // LeftPad pads the left side of the string with spaces so that the string becomes the requested length.
 type LeftPad int
 
